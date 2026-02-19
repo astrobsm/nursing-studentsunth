@@ -62,7 +62,7 @@ export async function POST(req: NextRequest) {
       if (!eventsByAttempt[evt.attempt_id]) {
         eventsByAttempt[evt.attempt_id] = [];
       }
-      eventsByAttempt[evt.attempt_id].push(evt);
+      eventsByAttempt[evt.attempt_id]!.push(evt);
     });
 
     // Build the response in the QuizResult format the frontend expects

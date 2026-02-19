@@ -23,17 +23,9 @@ export default function AdminPage() {
   const [results, setResults] = useState<QuizResult[]>([]);
   const [generating, setGenerating] = useState(false);
   const [dataSource, setDataSource] = useState<"local" | "supabase">("local");
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    if (authenticated) {
-      loadResults();
-    }
-  }, [authenticated]);
 
   /** Load results — try Supabase API first, fall back to localStorage */
-  async function loadResults() {
-    setLoading(true);
+  const loadResults = useCallback(async () => {
 
     // Try Supabase first
     if (isSupabaseReady()) {
@@ -52,7 +44,6 @@ export default function AdminPage() {
             });
             setResults(sorted);
             setDataSource("supabase");
-            setLoading(false);
             return;
           }
         }
@@ -69,8 +60,14 @@ export default function AdminPage() {
     });
     setResults(all);
     setDataSource("local");
-    setLoading(false);
-  }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [password]);
+
+  useEffect(() => {
+    if (authenticated) {
+      loadResults();
+    }
+  }, [authenticated, loadResults]);
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -248,7 +245,8 @@ export default function AdminPage() {
           6: { halign: "center", cellWidth: 16 },
         },
         alternateRowStyles: { fillColor: [245, 245, 245] },
-        didParseCell: (data: { section: string; column: { index: number }; cell: { styles: { textColor: number[]; fontStyle: string } }; row: { index: number } }) => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        didParseCell: (data: any) => {
           if (data.section === "body" && data.column.index === 6) {
             const result = results[data.row.index];
             if (result && result.percentage >= QUIZ_CONFIG.PASSING_PERCENTAGE) {
@@ -323,7 +321,8 @@ export default function AdminPage() {
           6: { cellWidth: 0 }, // auto
         },
         alternateRowStyles: { fillColor: [255, 245, 245] },
-        didParseCell: (data: { section: string; column: { index: number }; cell: { styles: { textColor: number[]; fontStyle: string } }; row: { index: number } }) => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        didParseCell: (data: any) => {
           if (data.section === "body" && data.column.index === 5) {
             const r = results[data.row.index];
             const level = getCheatingLevel(r);
