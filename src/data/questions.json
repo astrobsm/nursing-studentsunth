@@ -1,0 +1,242 @@
+[
+  {
+    "id": 1,
+    "question": "A patient presents with chest pain that radiates to the left arm, shortness of breath, diaphoresis, and nausea. Serum CK-MB levels are elevated. Which condition is MOST likely?",
+    "options": {
+      "A": "Stable angina pectoris",
+      "B": "Acute myocardial infarction",
+      "C": "Pericarditis",
+      "D": "Aortic regurgitation"
+    },
+    "answer": "B",
+    "explanation": "Acute myocardial infarction (AMI) presents with chest pain radiating to the left arm, diaphoresis, shortness of breath, and nausea. Elevated CK-MB isoenzyme is the most sensitive indicator of AMI. Stable angina is relieved by rest and nitroglycerin. Pericarditis pain worsens with inspiration, and aortic regurgitation presents differently."
+  },
+  {
+    "id": 2,
+    "question": "A nurse is assessing a patient with heart failure. Which finding is MOST indicative of right-sided heart failure?",
+    "options": {
+      "A": "Pulmonary crackles",
+      "B": "Paroxysmal nocturnal dyspnea",
+      "C": "Jugular venous distention and peripheral oedema",
+      "D": "Pink frothy sputum"
+    },
+    "answer": "C",
+    "explanation": "Right-sided heart failure causes congestion in the peripheral tissues and viscera. The right side of the heart cannot eject blood effectively, leading to jugular venous distention (JVD) and peripheral oedema (feet, ankles, legs). Pulmonary crackles, PND, and pink frothy sputum are manifestations of left-sided heart failure."
+  },
+  {
+    "id": 3,
+    "question": "Which three factors form Virchow's triad, believed to play a significant role in the development of venous thromboembolism (VTE)?",
+    "options": {
+      "A": "Hypertension, diabetes, and obesity",
+      "B": "Venous stasis, increased blood coagulability, and vessel wall injury",
+      "C": "Smoking, hyperlipidemia, and sedentary lifestyle",
+      "D": "Atrial fibrillation, valve disease, and heart failure"
+    },
+    "answer": "B",
+    "explanation": "Virchow's triad consists of three factors that contribute to VTE development: venous stasis (sluggish blood flow), increased blood coagulability (hypercoagulability), and vessel wall injury (endothelial damage). These factors create conditions favorable for thrombus formation in the veins."
+  },
+  {
+    "id": 4,
+    "question": "A patient with atrial fibrillation is at increased risk for which life-threatening complication?",
+    "options": {
+      "A": "Cardiac tamponade",
+      "B": "Aortic aneurysm",
+      "C": "Thromboembolism and stroke",
+      "D": "Pulmonary fibrosis"
+    },
+    "answer": "C",
+    "explanation": "Atrial fibrillation causes rapid, disorganized, uncoordinated twitching of the atrial musculature. This leads to blood stasis in the atria, increasing the risk of forming thromboemboli (blood clots). These clots may travel to the brain causing a stroke (brain attack), which is a major life-threatening complication."
+  },
+  {
+    "id": 5,
+    "question": "In assessing pulse volume, a pulse rated as '0' on the 0-4 scale indicates:",
+    "options": {
+      "A": "Palpable but diminished",
+      "B": "Normal or average",
+      "C": "Full and bounding",
+      "D": "Absent pulse"
+    },
+    "answer": "D",
+    "explanation": "On the 0-4 pulse volume scale: 0 = Absent pulse, 1 = Palpable but diminished, 2 = Normal/Average, 3 = Full and brisk, 4 = Full and bounding (often visible). An absent pulse (0) is a critical finding requiring immediate medical attention."
+  },
+  {
+    "id": 6,
+    "question": "A patient is diagnosed with ventricular fibrillation (V-fib). What is the PRIORITY nursing intervention?",
+    "options": {
+      "A": "Administer sublingual nitroglycerin",
+      "B": "Initiate immediate CPR and defibrillation",
+      "C": "Administer IV amiodarone only",
+      "D": "Place the patient in Fowler's position"
+    },
+    "answer": "B",
+    "explanation": "Ventricular fibrillation is the most common dysrhythmia in cardiac arrest, causing ineffective quivering of the ventricles where the heart does not pump. Death follows within 4 minutes if not corrected. Early defibrillation is critical to survival with immediate bystander CPR until defibrillation is available. This takes priority over all other interventions."
+  },
+  {
+    "id": 7,
+    "question": "Which laboratory marker remains elevated in the blood for 10 to 14 days after a myocardial infarction, making it useful for delayed diagnosis?",
+    "options": {
+      "A": "Creatine Kinase (CK)",
+      "B": "Myoglobin",
+      "C": "Cardiac Troponin",
+      "D": "Lactic Dehydrogenase (LDH)"
+    },
+    "answer": "C",
+    "explanation": "Cardiac troponin is a protein found in the myocardium that initiates the contractile process. It remains in the blood for 10 to 14 days after an AMI, making it valuable for diagnosing MI even when treatment is delayed by several days. CK peaks within 12-24 hours and declines within 48-72 hours. Myoglobin rises early but is not cardiac-specific."
+  },
+  {
+    "id": 8,
+    "question": "A patient with acute pericarditis is MOST likely to report relief of chest pain when placed in which position?",
+    "options": {
+      "A": "Supine with legs elevated",
+      "B": "Right lateral decubitus",
+      "C": "Upright and leaning forward (high Fowler's position)",
+      "D": "Trendelenburg position"
+    },
+    "answer": "C",
+    "explanation": "In pericarditis, the pericardial sac becomes inflamed. Pain is felt in the anterior chest and radiates to the left side of the neck, shoulder, or back. Placing the patient in a high Fowler's position or upright and leaning forward reduces the heart's contact with the inflamed pericardium, thereby relieving pain."
+  },
+  {
+    "id": 9,
+    "question": "Rheumatic heart disease is caused by an abnormal immune response to which organism?",
+    "options": {
+      "A": "Staphylococcus aureus",
+      "B": "Group A beta-hemolytic streptococci",
+      "C": "Candida albicans",
+      "D": "Escherichia coli"
+    },
+    "answer": "B",
+    "explanation": "Acute rheumatic fever is a systemic inflammatory disease caused by an abnormal immune response to infection by group A beta-hemolytic streptococci (usually streptococcal pharyngitis or 'strep throat'). Antibodies produced to attack the bacteria appear to also attack connective tissues, especially of the heart, leading to rheumatic heart disease and valve damage."
+  },
+  {
+    "id": 10,
+    "question": "A nurse is monitoring a patient on digoxin therapy. Which electrolyte imbalance MOST increases the risk of digitalis toxicity?",
+    "options": {
+      "A": "Hypernatremia",
+      "B": "Hypercalcemia",
+      "C": "Hypokalemia",
+      "D": "Hypermagnesemia"
+    },
+    "answer": "C",
+    "explanation": "Hypokalemia (decreased potassium level) enhances the effect of digoxin and predisposes the patient to digitalis toxicity. The serum potassium level must be monitored because the effect of digoxin is enhanced in the presence of hypokalemia. Clinical manifestations of digitalis toxicity include anorexia, nausea, visual disturbances, confusion, and bradycardia."
+  },
+  {
+    "id": 11,
+    "question": "Which of the following is a characteristic ECG finding in acute myocardial infarction?",
+    "options": {
+      "A": "Prolonged PR interval only",
+      "B": "ST-segment elevation, T-wave inversion, and Q-wave formation",
+      "C": "Normal sinus rhythm with occasional PVCs",
+      "D": "Shortened QT interval"
+    },
+    "answer": "B",
+    "explanation": "The characteristic ECG changes in acute MI include: inversion of the T-wave, depression or elevation of the ST segment, and formation of an abnormal Q wave. These changes help identify the location and extent of myocardial damage on the 12-lead ECG."
+  },
+  {
+    "id": 12,
+    "question": "ACE inhibitors are prescribed in heart failure management primarily because they:",
+    "options": {
+      "A": "Increase heart rate and contractility",
+      "B": "Promote vasodilation and diuresis, decreasing afterload and preload",
+      "C": "Block calcium channels in the myocardium",
+      "D": "Increase sodium and water retention"
+    },
+    "answer": "B",
+    "explanation": "ACE inhibitors (e.g., lisinopril) promote vasodilation and diuresis, ultimately decreasing afterload and preload. They reduce resistance to left ventricular ejection of blood, diminishing the heart's workload. ACE inhibitors also decrease aldosterone secretion, promoting renal excretion of sodium and fluid while retaining potassium."
+  },
+  {
+    "id": 13,
+    "question": "A patient with a thoracic aortic aneurysm presents with dysphagia, dyspnea, and hoarseness. These symptoms are caused by:",
+    "options": {
+      "A": "Heart failure and fluid overload",
+      "B": "Pressure of the aneurysm sac on surrounding intrathoracic structures",
+      "C": "Coronary artery occlusion",
+      "D": "Pericardial effusion"
+    },
+    "answer": "B",
+    "explanation": "In thoracic aortic aneurysm, symptoms depend on how the pulsating mass affects surrounding intrathoracic structures. Dysphagia occurs from impingement on the esophagus, dyspnea from pressure on the trachea or lungs, and hoarseness or voice changes from pressure against the laryngeal nerve."
+  },
+  {
+    "id": 14,
+    "question": "The nurse notes Arcus senilis in a 30-year-old patient during cardiovascular assessment. This finding suggests:",
+    "options": {
+      "A": "A normal age-related change",
+      "B": "Congenital heart disease",
+      "C": "A lipid metabolism disorder that can lead to coronary heart disease",
+      "D": "Chronic hemoglobin desaturation"
+    },
+    "answer": "C",
+    "explanation": "Arcus senilis is a light grey ring surrounding the iris. While common in older patients, when seen in younger patients it indicates a type of lipid metabolism disorder which can lead to coronary heart disease. Similarly, xanthelasma (yellowish plaque around the eyes) indicates hypercholesterolemia."
+  },
+  {
+    "id": 15,
+    "question": "In the management of stable angina pectoris, nitroglycerin works primarily by:",
+    "options": {
+      "A": "Increasing myocardial contractility and heart rate",
+      "B": "Dilating veins to reduce preload and relaxing coronary arterioles to improve blood flow",
+      "C": "Blocking beta-adrenergic receptors to reduce oxygen demand",
+      "D": "Inhibiting platelet aggregation and clot formation"
+    },
+    "answer": "B",
+    "explanation": "Nitroglycerin is a potent vasodilator that primarily dilates veins, causing venous pooling and reducing preload (the amount of blood returning to the heart). It also relaxes coronary arterioles, improving blood flow to the heart muscle. These effects decrease myocardial oxygen requirement, creating a more favorable balance between oxygen supply and demand."
+  },
+  {
+    "id": 16,
+    "question": "A patient with infective endocarditis is MOST likely to present with which primary symptoms?",
+    "options": {
+      "A": "Severe crushing chest pain and diaphoresis",
+      "B": "Fever and a new or changing heart murmur",
+      "C": "Bilateral leg oedema and ascites",
+      "D": "Sudden severe headache and visual changes"
+    },
+    "answer": "B",
+    "explanation": "The primary presenting symptoms of infective endocarditis are fever and heart murmur. Fever may be intermittent or absent, especially in older adults. Other findings include splinter hemorrhages under the fingernails, petechiae, and signs of systemic embolization. The infection develops on the endocardium, usually on damaged valve tissue."
+  },
+  {
+    "id": 17,
+    "question": "Pulse pressure is calculated as the difference between systolic and diastolic blood pressure. A NORMAL pulse pressure is:",
+    "options": {
+      "A": "10 to 20 mmHg",
+      "B": "30 to 40 mmHg",
+      "C": "50 to 70 mmHg",
+      "D": "80 to 100 mmHg"
+    },
+    "answer": "B",
+    "explanation": "Pulse pressure, which normally is 30 to 40 mmHg, is a reflection of stroke volume, ejection velocity, and systemic vascular resistance. It indicates how well the patient maintains cardiac output. The pulse pressure increases in conditions that elevate stroke volume (anxiety, exercise, bradycardia), reduce systemic vascular resistance (fever), or reduce distensibility of the arteries (atherosclerosis, aging, hypertension)."
+  },
+  {
+    "id": 18,
+    "question": "A patient with left-sided heart failure develops pink, frothy sputum. This finding indicates:",
+    "options": {
+      "A": "Pneumonia",
+      "B": "Pulmonary embolism",
+      "C": "Acute pulmonary oedema",
+      "D": "Pleural effusion"
+    },
+    "answer": "C",
+    "explanation": "Pink, frothy sputum is indicative of acute pulmonary oedema. In left-sided heart failure, the left ventricle cannot effectively pump blood out into the aorta. The increased pressure builds up in the pulmonary vasculature, forcing fluid from pulmonary capillaries into the pulmonary tissues and alveoli, causing pulmonary interstitial oedema and impaired gas exchange."
+  },
+  {
+    "id": 19,
+    "question": "Which of the following is a NON-MODIFIABLE risk factor for coronary heart disease?",
+    "options": {
+      "A": "Cigarette smoking",
+      "B": "Obesity",
+      "C": "Family history of CHD in a first-degree relative",
+      "D": "Hyperlipidemia"
+    },
+    "answer": "C",
+    "explanation": "Non-modifiable risk factors are those over which a person has no control. These include: family history of CHD (first-degree relative with cardiovascular disease at 55 years or younger for men and at 65 years or younger for women), increasing age, gender, and race. Smoking, obesity, and hyperlipidemia are modifiable risk factors that can be controlled through lifestyle changes or medication."
+  },
+  {
+    "id": 20,
+    "question": "A patient is receiving heparin therapy for deep vein thrombosis. Which laboratory test should the nurse monitor to evaluate the effectiveness of this therapy?",
+    "options": {
+      "A": "Prothrombin time (PT) and INR",
+      "B": "Activated partial thromboplastin time (aPTT)",
+      "C": "Serum creatinine and BUN",
+      "D": "Complete blood count (CBC) only"
+    },
+    "answer": "B",
+    "explanation": "The activated partial thromboplastin time (aPTT) is the laboratory test used to monitor heparin therapy effectiveness. Medication dosage is regulated by monitoring the aPTT. Prothrombin time (PT) and INR are used to monitor warfarin (a vitamin K antagonist) therapy. Both tests are important in managing anticoagulant therapy for DVT."
+  }
+]
