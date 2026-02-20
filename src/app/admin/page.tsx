@@ -24,8 +24,10 @@ export default function AdminPage() {
   const [generating, setGenerating] = useState(false);
   const [dataSource, setDataSource] = useState<"local" | "supabase">("local");
 
-  /** Load results — try Supabase API first, fall back to localStorage */
+  /** Load results — merge Supabase + localStorage for full cross-device view */
   const loadResults = useCallback(async () => {
+    let supabaseResults: QuizResult[] = [];
+    let supabaseOk = false;
 
     // Try Supabase first
     if (isSupabaseReady()) {
@@ -38,28 +40,45 @@ export default function AdminPage() {
         if (res.ok) {
           const data = await res.json();
           if (data.results && data.results.length > 0) {
-            const sorted = data.results.sort((a: QuizResult, b: QuizResult) => {
-              if (b.percentage !== a.percentage) return b.percentage - a.percentage;
-              return a.timeTaken - b.timeTaken;
-            });
-            setResults(sorted);
-            setDataSource("supabase");
-            return;
+            supabaseResults = data.results;
+            supabaseOk = true;
           }
         }
       } catch (err) {
-        console.warn("[admin] Supabase fetch failed, falling back to localStorage:", err);
+        console.warn("[admin] Supabase fetch failed, using localStorage:", err);
       }
     }
 
-    // Fallback: localStorage
-    const all = getAllResults();
-    all.sort((a, b) => {
+    // Always get local results too (may have pending unsynced submissions)
+    const localResults = getAllResults();
+
+    // Merge: Supabase is authoritative, add any local results not yet in Supabase
+    // Deduplicate on studentId + submittedAt
+    const seen = new Set<string>();
+    const merged: QuizResult[] = [];
+
+    for (const r of supabaseResults) {
+      const key = `${r.candidate.studentId}|${r.submittedAt}`;
+      seen.add(key);
+      merged.push(r);
+    }
+
+    for (const r of localResults) {
+      const key = `${r.candidate.studentId}|${r.submittedAt}`;
+      if (!seen.has(key)) {
+        seen.add(key);
+        merged.push(r);
+      }
+    }
+
+    // Sort by score desc, time asc
+    merged.sort((a, b) => {
       if (b.percentage !== a.percentage) return b.percentage - a.percentage;
       return a.timeTaken - b.timeTaken;
     });
-    setResults(all);
-    setDataSource("local");
+
+    setResults(merged);
+    setDataSource(supabaseOk ? "supabase" : "local");
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [password]);
 
@@ -437,7 +456,7 @@ export default function AdminPage() {
             <Image src="/logo.png" alt="Logo" width={40} height={40} className="rounded-sm" />
             <div>
               <h2 className="text-xl font-bold text-white">All Candidates Results</h2>
-              <p className="text-green-light text-xs">Ranked by Score – Admin View {dataSource === "supabase" ? "☁️ (Supabase)" : "💾 (Local)"}</p>
+              <p className="text-green-light text-xs">Ranked by Score – Admin View {dataSource === "supabase" ? "☁️ (Synced)" : "💾 (Local Only)"}</p>
             </div>
           </div>
           <button

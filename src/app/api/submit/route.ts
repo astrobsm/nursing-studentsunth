@@ -19,6 +19,7 @@ export async function POST(req: NextRequest) {
       answers,
       cheatingEvents,
       startedAt,
+      submittedAt,
     } = body;
 
     if (!studentId || !totalQuestions) {
@@ -52,7 +53,29 @@ export async function POST(req: NextRequest) {
       resolvedCandidateId = candidate.id;
     }
 
+    // Step 1.5: Duplicate check — prevent re-sync of the same attempt
+    // Match on candidate + submittedAt timestamp (unique per real submission)
+    if (submittedAt) {
+      const { data: existing } = await supabase
+        .from("attempts")
+        .select("id")
+        .eq("candidate_id", resolvedCandidateId)
+        .eq("submitted_at", submittedAt)
+        .maybeSingle();
+
+      if (existing) {
+        // Already synced — return success without inserting duplicate
+        return NextResponse.json(
+          { success: true, attemptId: existing.id, candidateId: resolvedCandidateId, duplicate: true },
+          { status: 200 }
+        );
+      }
+    }
+
     // Step 2: Insert the attempt
+    const resolvedStartedAt = startedAt || new Date().toISOString();
+    const resolvedSubmittedAt = submittedAt || new Date().toISOString();
+
     const { data: attempt, error: attemptErr } = await supabase
       .from("attempts")
       .insert({
@@ -64,7 +87,8 @@ export async function POST(req: NextRequest) {
         time_taken: timeTaken,
         tab_switches: tabSwitches,
         is_passed: percentage >= 50,
-        started_at: startedAt || new Date().toISOString(),
+        started_at: resolvedStartedAt,
+        submitted_at: resolvedSubmittedAt,
         answers: answers || {},
       })
       .select("id")

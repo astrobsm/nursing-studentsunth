@@ -151,6 +151,10 @@ export function submitQuiz(): QuizResult | null {
 async function submitToSupabase(result: QuizResult): Promise<void> {
   if (!isSupabaseReady()) return;
 
+  // Calculate the real startedAt from submittedAt - timeTaken
+  const submittedDate = new Date(result.submittedAt);
+  const startedAt = new Date(submittedDate.getTime() - result.timeTaken * 1000).toISOString();
+
   const payload = {
     candidate: result.candidate,
     fullName: result.candidate.fullName,
@@ -164,6 +168,7 @@ async function submitToSupabase(result: QuizResult): Promise<void> {
     tabSwitches: result.tabSwitches,
     answers: result.answers,
     submittedAt: result.submittedAt,
+    startedAt,
     cheatingEvents: result.cheatingEvents,
   };
 
