@@ -1,43 +1,58 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 /**
  * Registers the Service Worker and initializes the sync manager.
- * This is a client-only component that renders nothing visible.
+ * Aggressively auto-updates to prevent stale cached JS bundles.
  */
 export default function ServiceWorkerRegistration() {
-  const [updateAvailable, setUpdateAvailable] = useState(false);
-
   useEffect(() => {
     if (typeof window === "undefined" || !("serviceWorker" in navigator)) return;
 
     // Register Service Worker
     navigator.serviceWorker
-      .register("/sw.js", { scope: "/" })
-      .then((registration) => {
+      .register("/sw.js?v=4", { scope: "/" })
+      .then(async (registration) => {
         console.log("[PWA] Service Worker registered:", registration.scope);
 
-        // Check for updates periodically
+        // Immediately check for a new version
+        try {
+          await registration.update();
+        } catch (e) {
+          console.warn("[PWA] SW update check failed:", e);
+        }
+
+        // Auto-activate new workers without waiting for user action
         registration.addEventListener("updatefound", () => {
           const newWorker = registration.installing;
           if (!newWorker) return;
 
           newWorker.addEventListener("statechange", () => {
-            if (
-              newWorker.state === "installed" &&
-              navigator.serviceWorker.controller
-            ) {
-              // New version available
-              setUpdateAvailable(true);
+            if (newWorker.state === "installed") {
+              if (navigator.serviceWorker.controller) {
+                // New SW is ready — tell it to activate immediately
+                newWorker.postMessage({ type: "SKIP_WAITING" });
+                console.log("[PWA] New SW installed, activating...");
+              }
             }
           });
         });
 
-        // Check for updates every 5 minutes
+        // When a new SW takes over, reload the page to get fresh assets
+        let refreshing = false;
+        navigator.serviceWorker.addEventListener("controllerchange", () => {
+          if (!refreshing) {
+            refreshing = true;
+            console.log("[PWA] New SW active, reloading for fresh assets...");
+            window.location.reload();
+          }
+        });
+
+        // Check for updates every 60 seconds (aggressive)
         setInterval(() => {
           registration.update();
-        }, 5 * 60 * 1000);
+        }, 60 * 1000);
       })
       .catch((err) => {
         console.warn("[PWA] Service Worker registration failed:", err);
@@ -54,24 +69,6 @@ export default function ServiceWorkerRegistration() {
     };
   }, []);
 
-  if (!updateAvailable) return null;
-
-  return (
-    <div className="fixed top-0 left-0 right-0 z-[60] bg-blue-500 text-white text-center px-4 py-2 text-sm">
-      <span>A new version is available!</span>
-      <button
-        onClick={() => {
-          if (navigator.serviceWorker.controller) {
-            navigator.serviceWorker.controller.postMessage({
-              type: "SKIP_WAITING",
-            });
-          }
-          window.location.reload();
-        }}
-        className="ml-3 px-3 py-0.5 bg-white text-blue-500 rounded-full text-xs font-bold hover:bg-blue-50 transition-colors"
-      >
-        Update Now
-      </button>
-    </div>
-  );
+  // No visible UI — updates happen automatically
+  return null;
 }

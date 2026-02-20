@@ -3,7 +3,7 @@
 // Offline-first with background sync
 // ============================================
 
-const CACHE_NAME = "nursing-quiz-v3";
+const CACHE_NAME = "nursing-quiz-v4";
 const SYNC_TAG = "quiz-sync";
 
 // Core app shell files to precache
@@ -31,19 +31,26 @@ self.addEventListener("install", (event) => {
   );
 });
 
-// ---- ACTIVATE: Clean old caches, claim clients ----
+// ---- ACTIVATE: Aggressively clean ALL old caches, claim clients ----
 self.addEventListener("activate", (event) => {
   event.waitUntil(
     caches
       .keys()
-      .then((keys) =>
-        Promise.all(
+      .then((keys) => {
+        console.log("[SW] Cleaning caches. Current:", CACHE_NAME, "Found:", keys);
+        return Promise.all(
           keys
             .filter((key) => key !== CACHE_NAME)
-            .map((key) => caches.delete(key))
-        )
-      )
-      .then(() => self.clients.claim())
+            .map((key) => {
+              console.log("[SW] Deleting old cache:", key);
+              return caches.delete(key);
+            })
+        );
+      })
+      .then(() => {
+        console.log("[SW] Claiming all clients");
+        return self.clients.claim();
+      })
   );
 });
 
