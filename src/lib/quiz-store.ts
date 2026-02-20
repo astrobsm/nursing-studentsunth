@@ -1,6 +1,7 @@
 "use client";
 
 import { Candidate, QuizState, QuizResult, CheatingEvent } from "./types";
+import { queueForSync } from "./sync-manager";
 import questions from "@/data/questions.json";
 
 const STORAGE_KEY = "nursing_quiz_state";
@@ -146,30 +147,50 @@ export function submitQuiz(): QuizResult | null {
   return result;
 }
 
-/** Async submit to Supabase via API route — runs in background, never blocks the UI */
+/** Async submit to Supabase via API route — queues for offline sync if network unavailable */
 async function submitToSupabase(result: QuizResult): Promise<void> {
   if (!isSupabaseReady()) return;
-  try {
-    const res = await fetch("/api/submit", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        candidate: result.candidate,
-        totalQuestions: result.totalQuestions,
-        correctAnswers: result.correctAnswers,
-        percentage: result.percentage,
-        timeTaken: result.timeTaken,
-        tabSwitches: result.tabSwitches,
-        answers: result.answers,
-        submittedAt: result.submittedAt,
-        cheatingEvents: result.cheatingEvents,
-      }),
-    });
-    if (!res.ok) {
+
+  const payload = {
+    candidate: result.candidate,
+    fullName: result.candidate.fullName,
+    studentId: result.candidate.studentId,
+    email: result.candidate.email,
+    totalQuestions: result.totalQuestions,
+    correctAnswers: result.correctAnswers,
+    score: result.score,
+    percentage: result.percentage,
+    timeTaken: result.timeTaken,
+    tabSwitches: result.tabSwitches,
+    answers: result.answers,
+    submittedAt: result.submittedAt,
+    cheatingEvents: result.cheatingEvents,
+  };
+
+  // If online, try direct submission first
+  if (navigator.onLine) {
+    try {
+      const res = await fetch("/api/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      if (res.ok) {
+        console.log("[quiz-store] Submitted to Supabase successfully");
+        return;
+      }
       console.warn("[quiz-store] Supabase submit failed:", res.status);
+    } catch (err) {
+      console.warn("[quiz-store] Supabase submit error:", err);
     }
+  }
+
+  // Offline or failed — queue for background sync
+  try {
+    await queueForSync("submit", payload);
+    console.log("[quiz-store] Queued submission for offline sync");
   } catch (err) {
-    console.warn("[quiz-store] Supabase submit error:", err);
+    console.warn("[quiz-store] Failed to queue for sync:", err);
   }
 }
 

@@ -1,0 +1,28 @@
+{
+  "name": "UNTH Nursing Quiz",
+  "short_name": "Nursing Quiz",
+  "description": "2nd Year Nursing Quiz – Cardiovascular Disorders | UNTH School of Nursing",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#006400",
+  "theme_color": "#006400",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["education"],
+  "lang": "en",
+  "prefer_related_applications": false
+}
