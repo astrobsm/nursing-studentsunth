@@ -3,7 +3,7 @@
 // Offline-first with background sync
 // ============================================
 
-const CACHE_NAME = "nursing-quiz-v2";
+const CACHE_NAME = "nursing-quiz-v3";
 const SYNC_TAG = "quiz-sync";
 
 // Core app shell files to precache
