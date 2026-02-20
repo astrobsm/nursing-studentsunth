@@ -7,14 +7,6 @@ import questions from "@/data/questions.json";
 const STORAGE_KEY = "nursing_quiz_state";
 const ALL_RESULTS_KEY = "nursing_quiz_all_results";
 
-/** Check if Supabase env vars are set (client-side check) */
-function isSupabaseReady(): boolean {
-  return !!(
-    process.env.NEXT_PUBLIC_SUPABASE_URL &&
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-  );
-}
-
 const defaultState: QuizState = {
   candidate: null,
   currentQuestion: 0,
@@ -149,8 +141,6 @@ export function submitQuiz(): QuizResult | null {
 
 /** Async submit to Supabase via API route — queues for offline sync if network unavailable */
 async function submitToSupabase(result: QuizResult): Promise<void> {
-  if (!isSupabaseReady()) return;
-
   // Calculate the real startedAt from submittedAt - timeTaken
   const submittedDate = new Date(result.submittedAt);
   const startedAt = new Date(submittedDate.getTime() - result.timeTaken * 1000).toISOString();
@@ -181,12 +171,15 @@ async function submitToSupabase(result: QuizResult): Promise<void> {
         body: JSON.stringify(payload),
       });
       if (res.ok) {
-        console.log("[quiz-store] Submitted to Supabase successfully");
+        const data = await res.json();
+        console.log("[quiz-store] Submitted to Supabase successfully", data);
         return;
       }
-      console.warn("[quiz-store] Supabase submit failed:", res.status);
+      // Log the full error response for debugging
+      const errorBody = await res.text();
+      console.error("[quiz-store] API submit failed:", res.status, errorBody);
     } catch (err) {
-      console.warn("[quiz-store] Supabase submit error:", err);
+      console.error("[quiz-store] Network error submitting:", err);
     }
   }
 

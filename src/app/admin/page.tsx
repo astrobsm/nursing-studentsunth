@@ -7,14 +7,6 @@ import { getAllResults } from "@/lib/quiz-store";
 import { ADMIN_PASSWORD, QUIZ_CONFIG } from "@/lib/constants";
 import { QuizResult } from "@/lib/types";
 
-/** Check if Supabase env vars are set (client-side) */
-function isSupabaseReady(): boolean {
-  return !!(
-    process.env.NEXT_PUBLIC_SUPABASE_URL &&
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-  );
-}
-
 export default function AdminPage() {
   const router = useRouter();
   const [password, setPassword] = useState("");
@@ -29,24 +21,25 @@ export default function AdminPage() {
     let supabaseResults: QuizResult[] = [];
     let supabaseOk = false;
 
-    // Try Supabase first
-    if (isSupabaseReady()) {
-      try {
-        const res = await fetch("/api/admin/results", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ password }),
-        });
-        if (res.ok) {
-          const data = await res.json();
-          if (data.results && data.results.length > 0) {
-            supabaseResults = data.results;
-            supabaseOk = true;
-          }
+    // Always try the API route (server handles Supabase connection)
+    try {
+      const res = await fetch("/api/admin/results", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password }),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        supabaseOk = true;  // API route worked — Supabase is reachable
+        if (data.results && data.results.length > 0) {
+          supabaseResults = data.results;
         }
-      } catch (err) {
-        console.warn("[admin] Supabase fetch failed, using localStorage:", err);
+      } else {
+        const errText = await res.text();
+        console.warn("[admin] API returned", res.status, errText);
       }
+    } catch (err) {
+      console.warn("[admin] API fetch failed, using localStorage:", err);
     }
 
     // Always get local results too (may have pending unsynced submissions)

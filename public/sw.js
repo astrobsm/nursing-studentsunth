@@ -3,7 +3,7 @@
 // Offline-first with background sync
 // ============================================
 
-const CACHE_NAME = "nursing-quiz-v1";
+const CACHE_NAME = "nursing-quiz-v2";
 const SYNC_TAG = "quiz-sync";
 
 // Core app shell files to precache
@@ -194,8 +194,9 @@ async function handleCandidateRequest(request) {
 }
 
 // ---- IndexedDB helpers for sync queue ----
-const DB_NAME = "nursing_quiz_sync";
-const DB_VERSION = 1;
+// MUST match the app-side offline-db.ts DB_NAME and DB_VERSION
+const DB_NAME = "nursing_quiz_offline";
+const DB_VERSION = 2;
 const STORE_NAME = "sync_queue";
 
 function openSyncDB() {
@@ -203,11 +204,28 @@ function openSyncDB() {
     const req = indexedDB.open(DB_NAME, DB_VERSION);
     req.onupgradeneeded = (e) => {
       const db = e.target.result;
-      if (!db.objectStoreNames.contains(STORE_NAME)) {
-        db.createObjectStore(STORE_NAME, {
+      // Must create ALL stores that offline-db.ts expects (same schema)
+      if (!db.objectStoreNames.contains("quiz_state")) {
+        db.createObjectStore("quiz_state", { keyPath: "key" });
+      }
+      if (!db.objectStoreNames.contains("results")) {
+        const resultStore = db.createObjectStore("results", {
           keyPath: "id",
           autoIncrement: true,
         });
+        resultStore.createIndex("studentId", "studentId", { unique: false });
+        resultStore.createIndex("submittedAt", "submittedAt", { unique: false });
+      }
+      if (!db.objectStoreNames.contains(STORE_NAME)) {
+        const syncStore = db.createObjectStore(STORE_NAME, {
+          keyPath: "id",
+          autoIncrement: true,
+        });
+        syncStore.createIndex("type", "type", { unique: false });
+        syncStore.createIndex("createdAt", "createdAt", { unique: false });
+      }
+      if (!db.objectStoreNames.contains("meta")) {
+        db.createObjectStore("meta", { keyPath: "key" });
       }
     };
     req.onsuccess = () => resolve(req.result);

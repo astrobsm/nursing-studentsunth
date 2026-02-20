@@ -24,12 +24,33 @@ export async function POST(req: NextRequest) {
 
     if (!studentId || !totalQuestions) {
       return NextResponse.json(
-        { error: "Missing required fields" },
+        { error: "Missing required fields: studentId and totalQuestions are required" },
         { status: 400 }
       );
     }
 
-    const supabase = createServerClient();
+    // Validate server-side env vars before attempting Supabase call
+    if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
+      console.error("[submit] Missing Supabase env vars:", {
+        url: !!process.env.NEXT_PUBLIC_SUPABASE_URL,
+        key: !!process.env.SUPABASE_SERVICE_ROLE_KEY,
+      });
+      return NextResponse.json(
+        { error: "Server misconfigured: missing Supabase credentials" },
+        { status: 503 }
+      );
+    }
+
+    let supabase;
+    try {
+      supabase = createServerClient();
+    } catch (err) {
+      console.error("[submit] Failed to create Supabase client:", err);
+      return NextResponse.json(
+        { error: "Failed to initialize database connection" },
+        { status: 503 }
+      );
+    }
 
     // Step 1: Ensure candidate exists (upsert)
     let resolvedCandidateId = candidateId;

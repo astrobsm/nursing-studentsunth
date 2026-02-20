@@ -13,7 +13,25 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const supabase = createServerClient();
+    // Validate server-side env vars
+    if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
+      console.error("[admin/results] Missing Supabase env vars");
+      return NextResponse.json(
+        { error: "Server misconfigured: missing Supabase credentials", results: [] },
+        { status: 503 }
+      );
+    }
+
+    let supabase;
+    try {
+      supabase = createServerClient();
+    } catch (err) {
+      console.error("[admin/results] Failed to create Supabase client:", err);
+      return NextResponse.json(
+        { error: "Failed to initialize database connection", results: [] },
+        { status: 503 }
+      );
+    }
 
     // Get all attempts with candidate info, ordered by score desc
     const { data: attempts, error: attemptErr } = await supabase

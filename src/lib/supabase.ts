@@ -31,10 +31,10 @@ export function createBrowserClient() {
   return browserClient;
 }
 
-// Check if Supabase is configured
+// Check if Supabase is configured (server-side only — used in API routes)
 export function isSupabaseConfigured(): boolean {
   return !!(
     process.env.NEXT_PUBLIC_SUPABASE_URL &&
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+    process.env.SUPABASE_SERVICE_ROLE_KEY
   );
 }
