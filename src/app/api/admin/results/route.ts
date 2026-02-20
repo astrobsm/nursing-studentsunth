@@ -55,8 +55,7 @@ export async function POST(req: NextRequest) {
           email
         )
       `)
-      .order("percentage", { ascending: false })
-      .order("time_taken", { ascending: true });
+      .order("submitted_at", { ascending: false });
 
     if (attemptErr) {
       console.error("Fetch attempts error:", attemptErr);

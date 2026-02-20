@@ -90,7 +90,7 @@ LEFT JOIN (
   FROM cheating_events
   GROUP BY attempt_id
 ) ce ON ce.attempt_id = a.id
-ORDER BY a.percentage DESC, a.time_taken ASC;
+ORDER BY c.full_name ASC;
 
 -- View: Cheating summary per candidate
 CREATE OR REPLACE VIEW cheating_summary AS

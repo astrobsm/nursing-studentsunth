@@ -64,11 +64,10 @@ export default function AdminPage() {
       }
     }
 
-    // Sort by score desc, time asc
-    merged.sort((a, b) => {
-      if (b.percentage !== a.percentage) return b.percentage - a.percentage;
-      return a.timeTaken - b.timeTaken;
-    });
+    // Sort alphabetically by full name (A → Z)
+    merged.sort((a, b) =>
+      a.candidate.fullName.localeCompare(b.candidate.fullName)
+    );
 
     setResults(merged);
     setDataSource(supabaseOk ? "supabase" : "local");
