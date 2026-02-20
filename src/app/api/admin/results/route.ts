@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createServerClient } from "@/lib/supabase";
-
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "blackvelvet";
+import { ADMIN_PASSWORD } from "@/lib/constants";
 
 // POST /api/admin/results — Get all results (requires password)
 export async function POST(req: NextRequest) {
